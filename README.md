@@ -1,17 +1,22 @@
 # VersoDigital Blog
 
-Blog profesional desarrollado con Flask para VersoDigital. Una plataforma moderna para compartir contenido digital.
+Un blog profesional y moderno desarrollado con Flask, enfocado en SEO y experiencia de usuario.
+
+![Python](https://img.shields.io/badge/python-v3.8+-blue.svg)
+![Flask](https://img.shields.io/badge/flask-v2.0+-green.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## Características
 
-- Sistema de administración de contenido
-- Editor de posts con soporte para imágenes
-- Categorías y etiquetas
-- SEO optimizado
-- Diseño responsivo
-- Sistema de autenticación
-- Posts relacionados
-- Compartir en redes sociales
+- Gestión completa de posts y categorías
+- Sistema de autenticación de usuarios
+- Panel de administración intuitivo
+- Soporte para imágenes destacadas
+- Optimización SEO integrada
+- Diseño responsive
+- Sistema de etiquetas y categorías
+- URLs amigables con slugs
+- Análisis de tráfico básico
 
 ## Requisitos
 
@@ -22,18 +27,29 @@ Blog profesional desarrollado con Flask para VersoDigital. Una plataforma modern
 - Werkzeug
 - Python-dotenv
 
+## Tecnologías
+
+- **Backend**: Flask, SQLAlchemy
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Base de datos**: SQLite
+- **Autenticación**: Flask-Login
+- **Formularios**: Flask-WTF
+- **Imágenes**: Pillow
+- **SEO**: Meta tags dinámicos
+
 ## Instalación
 
 1. Clonar el repositorio:
 ```bash
-git clone <url-del-repositorio>
-cd web_ibra
+git clone https://github.com/ouamdaogo/versodigital.git
+cd versodigital
 ```
 
-2. Crear un entorno virtual:
+2. Crear entorno virtual:
 ```bash
 python -m venv venv
-source venv/bin/activate  # En Windows: venv\Scripts\activate
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Unix/MacOS
 ```
 
 3. Instalar dependencias:
@@ -52,10 +68,20 @@ cp .env.example .env
 flask db upgrade
 ```
 
-6. Ejecutar el servidor:
+6. Ejecutar la aplicación:
 ```bash
-python app.py
+flask run
 ```
+
+## Configuración
+
+### Variables de Entorno
+
+- `FLASK_APP`: Nombre del archivo principal
+- `FLASK_ENV`: Entorno (development/production)
+- `SECRET_KEY`: Clave secreta para sesiones
+- `DATABASE_URL`: URL de la base de datos
+- `UPLOAD_FOLDER`: Directorio para uploads
 
 ## Uso
 
@@ -77,18 +103,22 @@ web_ibra/
     └── partials/    # Componentes reutilizables
 ```
 
-## Contribuir
+## Contribución
 
-1. Fork el proyecto
-2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abrir un Pull Request
+¡Las contribuciones son bienvenidas! Por favor, lee nuestra [guía de contribución](CONTRIBUTING.md).
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
 
 ## Contacto
 
-VersoDigital - [Sitio web](https://versodigital.com)
+- Website: [versodigital.com](https://versodigital.com)
+- Email: [contacto@versodigital.com](mailto:contacto@versodigital.com)
+- Twitter: [@VersoDigital](https://twitter.com/VersoDigital)
+
+## Agradecimientos
+
+- [Flask](https://flask.palletsprojects.com/)
+- [Bootstrap](https://getbootstrap.com/)
+- [SQLAlchemy](https://www.sqlalchemy.org/)
