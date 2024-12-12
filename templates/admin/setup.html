@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Configuración Inicial - Ibrahim Ouamdaogo{% endblock %}
+
+{% block content %}
+<section class="admin-setup">
+    <div class="container">
+        <div class="setup-form-container">
+            <h1>Configuración Inicial</h1>
+            <p class="setup-description">Crea tu cuenta de administrador para comenzar a gestionar tu blog.</p>
+            
+            <form method="POST" class="setup-form">
+                <div class="form-group">
+                    <label for="username">Nombre de usuario</label>
+                    <input type="text" id="username" name="username" required 
+                           class="form-control" placeholder="Tu nombre de usuario">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required 
+                           class="form-control" placeholder="Tu contraseña">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    Crear cuenta y configurar blog
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.admin-setup {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-light);
+    padding: 2rem;
+}
+
+.setup-form-container {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    max-width: 500px;
+    width: 100%;
+}
+
+.setup-form-container h1 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.setup-description {
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.setup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.form-control {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--bg-light);
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 1rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}

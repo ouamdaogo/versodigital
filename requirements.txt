@@ -1,0 +1,12 @@
+Flask==3.0.0
+Flask-SQLAlchemy==3.1.1
+Flask-Login==0.6.3
+Flask-WTF==1.2.1
+python-slugify==8.0.1
+Pillow==10.1.0
+python-dotenv==1.0.0
+markdown2==2.4.10
+Flask-Migrate==4.0.5
+Flask-Caching==2.1.0
+bleach==6.1.0
+Flask-Admin==1.6.1

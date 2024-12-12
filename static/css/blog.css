@@ -1,0 +1,259 @@
+/* Estilos específicos para el blog */
+.blog-section {
+    padding: 4rem 0;
+    background: var(--bg-light);
+}
+
+.blog-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.blog-header h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.category-filter {
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Layout del blog */
+.blog-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Sidebar */
+.blog-sidebar {
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+}
+
+.categories-widget {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.categories-widget h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.categories-list {
+    list-style: none;
+    padding: 0;
+}
+
+.categories-list li {
+    margin-bottom: 0.5rem;
+}
+
+.categories-list a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: var(--transition);
+    display: block;
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.categories-list a:hover {
+    background: var(--bg-light);
+    color: var(--primary-color);
+}
+
+.categories-list li.active a {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+/* Grid de posts */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.post-card {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.post-card.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.post-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.post-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.post-card:hover .post-image img {
+    transform: scale(1.05);
+}
+
+.post-content {
+    padding: 1.5rem;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.post-categories {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.category-tag {
+    background: var(--bg-light);
+    color: var(--primary-color);
+    padding: 0.2rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.category-tag:hover {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.post-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+.post-title a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.post-title a:hover {
+    color: var(--primary-color);
+}
+
+.post-summary {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.post-footer {
+    border-top: 1px solid var(--bg-light);
+    padding-top: 1rem;
+    margin-top: auto;
+}
+
+.read-more {
+    color: var(--primary-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.read-more:hover {
+    gap: 0.8rem;
+}
+
+.read-more .icon {
+    transition: transform 0.3s ease;
+}
+
+.read-more:hover .icon {
+    transform: translateX(3px);
+}
+
+/* Paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+    gap: 1rem;
+}
+
+.pagination a,
+.pagination span {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.pagination a {
+    background: var(--white);
+    color: var(--text-color);
+    box-shadow: var(--shadow);
+}
+
+.pagination a:hover {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.current-page {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.ellipsis {
+    color: var(--text-light);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .blog-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .blog-sidebar {
+        position: static;
+        margin-bottom: 2rem;
+    }
+    
+    .posts-grid {
+        grid-template-columns: 1fr;
+    }
+}

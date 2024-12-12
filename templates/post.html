@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - VersoDigital{% endblock %}
+
+{% block meta_description %}{{ post.meta_description or post.summary }}{% endblock %}
+
+{% block meta %}
+{% for key, value in post.get_meta_tags().items() %}
+<meta property="{{ key }}" content="{{ value }}">
+{% endfor %}
+{% endblock %}
+
+{% block content %}
+<article class="post-container">
+    {% if post.featured_image %}
+    <header class="post-header with-image" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url({{ url_for('static', filename='uploads/' + post.featured_image) }})">
+    {% else %}
+    <header class="post-header">
+    {% endif %}
+        <div class="post-header-content">
+            <h1>{{ post.title }}</h1>
+            <div class="post-meta">
+                <time datetime="{{ post.created_at.isoformat() }}">
+                    {{ post.created_at.strftime('%d de %B, %Y') }}
+                </time>
+                {% if post.categories %}
+                <div class="post-categories">
+                    {% for category in post.categories %}
+                    <a href="{{ url_for('category', slug=category.slug) }}" class="category-tag">
+                        {{ category.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <div class="post-content">
+        {% if post.summary %}
+        <div class="post-summary">
+            {{ post.summary }}
+        </div>
+        {% endif %}
+
+        <div class="post-body">
+            {{ post.content|safe }}
+        </div>
+    </div>
+
+    <footer class="post-footer">
+        <div class="share-buttons">
+            <h3>Compartir</h3>
+            <a href="https://twitter.com/intent/tweet?text={{ post.title|urlencode }}&url={{ request.url|urlencode }}" 
+               target="_blank" class="share-button twitter">
+                <i class="fab fa-twitter"></i> Twitter
+            </a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.url|urlencode }}&title={{ post.title|urlencode }}" 
+               target="_blank" class="share-button linkedin">
+                <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+        </div>
+
+        <div class="author-bio">
+            <h3>Sobre el Autor</h3>
+            <div class="author-content">
+                <div class="author-avatar">{{ post.author.username[0] }}</div>
+                <div class="author-info">
+                    <h4>{{ post.author.username }}</h4>
+                    <p>Editor en VersoDigital</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</article>
+
+{% if related_posts %}
+<section class="related-posts">
+    <h2>Artículos Relacionados</h2>
+    <div class="posts-grid">
+        {% for related in related_posts %}
+        <article class="post-card">
+            {% if related.featured_image %}
+            <div class="post-image">
+                <img src="{{ url_for('static', filename='uploads/' + related.featured_image) }}" 
+                     alt="{{ related.title }}">
+            </div>
+            {% endif %}
+            <div class="post-content">
+                <h3>{{ related.title }}</h3>
+                <p>{{ related.summary }}</p>
+                <a href="{{ url_for('post', slug=related.slug) }}" class="read-more">Leer más →</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.post-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.post-header {
+    position: relative;
+    padding: 4rem 2rem;
+    margin: 2rem 0;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.post-header.with-image {
+    padding: 8rem 2rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.post-header-content {
+    position: relative;
+    z-index: 2;
+}
+
+.post-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.post-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.post-categories {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.category-tag {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    color: var(--white);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.category-tag:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.post-content {
+    margin: 2rem 0;
+}
+
+.post-summary {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--bg-light);
+}
+
+.post-body {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.post-body h2 {
+    margin: 2rem 0 1rem;
+    color: var(--primary-color);
+}
+
+.post-body p {
+    margin-bottom: 1.5rem;
+}
+
+.post-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 2rem 0;
+}
+
+.post-footer {
+    margin: 4rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--bg-light);
+}
+
+.share-buttons {
+    margin-bottom: 3rem;
+}
+
+.share-buttons h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--white);
+    transition: var(--transition);
+}
+
+.share-button i {
+    margin-right: 0.5rem;
+}
+
+.share-button.twitter {
+    background: #1DA1F2;
+}
+
+.share-button.linkedin {
+    background: #0077B5;
+}
+
+.share-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.author-bio {
+    background: var(--bg-light);
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.author-bio h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.author-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.author-avatar {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.author-info h4 {
+    margin-bottom: 0.5rem;
+}
+
+.related-posts {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 1rem;
+}
+
+.related-posts h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+}
+
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.post-card {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+}
+
+.post-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.post-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.post-card .post-content {
+    padding: 1.5rem;
+    margin: 0;
+}
+
+.post-card h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.read-more {
+    display: inline-block;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .post-header h1 {
+        font-size: 2rem;
+    }
+    
+    .post-header.with-image {
+        padding: 6rem 1rem;
+    }
+    
+    .post-body {
+        font-size: 1rem;
+    }
+    
+    .posts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}

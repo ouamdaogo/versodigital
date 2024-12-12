@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Blog - Ibrahim Ouamdaogo{% endblock %}
+
+{% block meta_description %}Explora artículos sobre desarrollo web, diseño y tecnología en el blog de Ibrahim Ouamdaogo{% endblock %}
+
+{% block content %}
+<section class="blog-section">
+    <div class="container">
+        <header class="blog-header">
+            <h1>Blog</h1>
+            {% if category %}
+                <p class="category-filter">Filtrando por: {{ category.name }}</p>
+            {% endif %}
+        </header>
+
+        <div class="blog-layout">
+            <!-- Sidebar con categorías -->
+            <aside class="blog-sidebar">
+                <div class="categories-widget">
+                    <h3>Categorías</h3>
+                    <ul class="categories-list">
+                        <li class="{% if not category %}active{% endif %}">
+                            <a href="{{ url_for('blog') }}">Todas</a>
+                        </li>
+                        {% for cat in categories %}
+                        <li class="{% if category and category.id == cat.id %}active{% endif %}">
+                            <a href="{{ url_for('blog', category=cat.slug) }}">
+                                {{ cat.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Grid de posts -->
+            <div class="posts-grid">
+                {% for post in posts.items %}
+                <article class="post-card">
+                    {% if post.featured_image %}
+                    <div class="post-image">
+                        <img src="{{ url_for('static', filename='uploads/' + post.featured_image) }}"
+                             alt="{{ post.title }}"
+                             loading="lazy">
+                    </div>
+                    {% endif %}
+                    
+                    <div class="post-content">
+                        <header>
+                            <div class="post-meta">
+                                <time datetime="{{ post.created_at.isoformat() }}">
+                                    {{ post.created_at.strftime('%d %B, %Y') }}
+                                </time>
+                                {% if post.categories %}
+                                <div class="post-categories">
+                                    {% for category in post.categories %}
+                                    <a href="{{ url_for('blog', category=category.slug) }}" class="category-tag">
+                                        {{ category.name }}
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <h2 class="post-title">
+                                <a href="{{ url_for('post', slug=post.slug) }}">{{ post.title }}</a>
+                            </h2>
+                        </header>
+                        
+                        {% if post.summary %}
+                        <p class="post-summary">{{ post.summary }}</p>
+                        {% endif %}
+                        
+                        <footer class="post-footer">
+                            <a href="{{ url_for('post', slug=post.slug) }}" class="read-more">
+                                Leer más
+                                <span class="icon">→</span>
+                            </a>
+                        </footer>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Paginación -->
+        {% if posts.pages > 1 %}
+        <nav class="pagination">
+            {% if posts.has_prev %}
+            <a href="{{ url_for('blog', page=posts.prev_num, category=category.slug if category else None) }}" 
+               class="pagination-prev">
+                ← Anterior
+            </a>
+            {% endif %}
+
+            <div class="pagination-numbers">
+                {% for page_num in posts.iter_pages(left_edge=2, left_current=2, right_current=2, right_edge=2) %}
+                    {% if page_num %}
+                        {% if posts.page == page_num %}
+                        <span class="current-page">{{ page_num }}</span>
+                        {% else %}
+                        <a href="{{ url_for('blog', page=page_num, category=category.slug if category else None) }}">
+                            {{ page_num }}
+                        </a>
+                        {% endif %}
+                    {% else %}
+                        <span class="ellipsis">…</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            {% if posts.has_next %}
+            <a href="{{ url_for('blog', page=posts.next_num, category=category.slug if category else None) }}"
+               class="pagination-next">
+                Siguiente →
+            </a>
+            {% endif %}
+        </nav>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block schema_type %}Blog{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animación de entrada para los posts
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.post-card').forEach(card => {
+        observer.observe(card);
+    });
+</script>
+{% endblock %}
